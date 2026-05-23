@@ -50,6 +50,15 @@ def full_bookings():
         left_on="driver_id",
         right_on="id"
     )
+    merged = merged[
+    [
+        "customer",
+        "location",
+        "payment",
+        "driver_name",
+        "vehicle"
+    ]
+]
 
     return {
         "full_bookings": merged.to_dict(orient="records")
@@ -58,14 +67,11 @@ def full_bookings():
 def pending_bookings():
 
     bookings = pd.read_csv("bookings.csv")
-    filtbookings = bookings[bookings["payment"]== "Pending"]
+    filtered_bookings = bookings[bookings["payment"]== "Pending"]
 
-   
-
-    
 
     return {
-        "pending_bookings": filtbookings.to_dict(orient="records")
+        "pending_bookings": filtered_bookings.to_dict(orient="records")
     }
 
 app.run(debug=True)
